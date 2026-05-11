@@ -44,6 +44,17 @@ pip install -r requirements.txt
 
 Use a CUDA-enabled PyTorch build that matches your machine. Model access and GPU memory requirements depend on the model configured at runtime.
 
+## Environment
+
+CLIF is intended for GPU server and research-cluster environments rather than CPU-only execution. The public artifact assumes:
+
+- NVIDIA GPUs with a CUDA-compatible PyTorch installation.
+- Enough GPU memory to host one or more LLM replicas and LoRA adapters.
+- Explicit multi-GPU mapping through `--replica_gpus`, for example `[[0],[1],[2],[3]]` for one replica per GPU or `[[0,1],[2,3]]` for model-parallel replicas.
+- A shared filesystem or pre-synchronized model and dataset cache when running on multiple nodes.
+
+The current public code path is centered on a single launched CLIF process that manages multiple local GPUs. Multi-node experiments are expected to be launched by the cluster scheduler or site-specific orchestration layer, with one or more CLIF processes bound to the allocated nodes. A general-purpose multi-node launcher is not included in this artifact yet.
+
 ## Quick Smoke Test
 
 The smoke test is a lightweight wiring check for the public artifact. It uses a fixed request stream and a small public model setting. It is not intended to reproduce paper-scale experiments.
