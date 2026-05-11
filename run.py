@@ -17,8 +17,8 @@ def parse_args():
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
 
-    parser.add_argument("--baseline", type=str, default="CLIF", choices=["CLIF", "DualModel", "Shepherd", "dLoRA", "test"], help="System mode.")
-    parser.add_argument("--dispatcher", type=str, default=None, choices=["subflow", "round"], help="Dispatcher policy. Use subflow for CLIF and round for round-robin.")
+    parser.add_argument("--baseline", type=str, default="CLIF", choices=["CLIF"], help="System mode.")
+    parser.add_argument("--dispatcher", type=str, default=None, choices=["subflow"], help="Dispatcher policy.")
     parser.add_argument("--enable_dual_adapter", action="store_true", help="Enable dual-adapter replicas.")
     parser.add_argument("--force_quantization", type=str, choices=["4bit", "8bit", "none"], default="none", help="Quantization mode.")
 
@@ -35,7 +35,6 @@ def parse_args():
     parser.add_argument("--output_dir", type=str, default="./output", help="Output directory.")
     parser.add_argument("--output_subdir", type=str, default=None, help="Optional output subdirectory.")
     parser.add_argument("--num_replicas", type=int, default=8, help="Number of replicas.")
-    parser.add_argument("--train_replicas_num", type=int, default=8, help="Number of trainable replicas for DualModel.")
     parser.add_argument("--replica_gpus", type=str, default=None, help='Replica-to-GPU mapping as JSON, for example "[[0,1],[2,3]]".')
 
     parser.add_argument("--train_size", type=float, default=0.8, help="Training split ratio.")

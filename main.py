@@ -10,8 +10,6 @@ from core.replica import Replica, DualAdapterReplica
 from core.dispatcher import SubflowDispatcher
 from core.coordinator import Coordinator
 from core.fl_launcher import FederatedLearningLauncher
-from baselines.dispatchers import RoundDispatcher, dLoRADispatcher, ShepherdDispatcher
-from baselines.dual_model_replica import DualModelReplica
 from common.state import StateManagement, ReplicaState
 from common.monitor import GPUMonitor
 from common.request_generator import RequestGenerator
@@ -23,20 +21,11 @@ from common.model_loader import (
 
 DISPATCHER_MAP = {
     "subflow": lambda reps, ddl: SubflowDispatcher(reps, ddl=ddl),
-    "round": lambda reps, ddl: RoundDispatcher(reps, ddl=ddl),
-    "dLoRA": lambda reps, ddl: dLoRADispatcher(reps, ddl=ddl),
-    "Shepherd": lambda reps, ddl: ShepherdDispatcher(reps, ddl=ddl),
 }
 
 BASELINE_DEFAULT_DISPATCHER = {
     "CLIF": "subflow",
-    "dLoRA": "dLoRA",
-    "Shepherd": "Shepherd",
-    "DualModel": "round",
-    "test": "round",
 }
-
-FL_BASELINES = {"CLIF", "DualModel", "test"}
 
 
 def main(args):
@@ -78,11 +67,11 @@ def main(args):
     quantization = None
 
     use_dual_adapter = args.enable_dual_adapter
-    if use_dual_adapter and args.baseline == "CLIF":
+    if use_dual_adapter:
         print("[Main] Enabling dual-adapter mode")
         from utils.thread_adapter import install_thread_local_adapter_patch
         install_thread_local_adapter_patch()
-    elif args.baseline == "CLIF":
+    else:
         print("[Main] Using standard single-adapter replicas")
 
     replica_gpu_assignments = parse_replica_gpus(args)
@@ -92,47 +81,20 @@ def main(args):
         device = torch.device(f"cuda:{gpu_list[0]}")
         print(f"[Main] Replica {i} GPU: {gpu_list}")
 
-        if args.baseline == "CLIF":
-            if use_dual_adapter:
-                active = f"active_adapter_{i}"
-                shadow = f"shadow_adapter_{i}"
-                model = load_dual_model_instance(
-                    args.model_name, args.low_rank, device,
-                    active, shadow, i, quantization, args.force_quantization)
-                replica = DualAdapterReplica(
-                    replica_id=i, model=model, train_dataset=train_datasets[i],
-                    tokenizer=tokenizer, args=args,
-                    active_adapter_name=active, shadow_adapter_name=shadow,
-                    state_manager=state_manager, task_mode=args.task_mode,
-                    baseline="CLIF")
-            else:
-                model = (_load_model(args, gpu_list, device, quantization))
-                replica = Replica(
-                    replica_id=i, model=model, train_dataset=train_datasets[i],
-                    tokenizer=tokenizer, args=args,
-                    state_manager=state_manager, task_mode=args.task_mode)
-
-        elif args.baseline in ("dLoRA", "Shepherd"):
-            model = _load_model(args, gpu_list, device, quantization)
-            replica = Replica(
+        if use_dual_adapter:
+            active = f"active_adapter_{i}"
+            shadow = f"shadow_adapter_{i}"
+            model = load_dual_model_instance(
+                args.model_name, args.low_rank, device,
+                active, shadow, i, quantization, args.force_quantization)
+            replica = DualAdapterReplica(
                 replica_id=i, model=model, train_dataset=train_datasets[i],
                 tokenizer=tokenizer, args=args,
-                state_manager=state_manager, task_mode=args.task_mode)
-
-        elif args.baseline == "DualModel":
-            model_infer = _load_model(args, gpu_list, device, quantization)
-            model_train = _load_model(args, gpu_list, device, quantization)
-            replica = DualModelReplica(
-                replica_id=i, model_infer=model_infer, model_train=model_train,
-                train_dataset=train_datasets[i], tokenizer=tokenizer, args=args,
-                adapter_name_infer=f"infer_adapter_{i}",
-                adapter_name_train=f"train_adapter_{i}",
-                state_manager=state_manager, task_mode=args.task_mode)
-
-        elif args.baseline == "test":
-            model = load_model_instance_multi_GPU(
-                args.model_name, args.low_rank, device=device,
-                device_map=gpu_list, force_quantization=args.force_quantization)
+                active_adapter_name=active, shadow_adapter_name=shadow,
+                state_manager=state_manager, task_mode=args.task_mode,
+                baseline="CLIF")
+        else:
+            model = _load_model(args, gpu_list, device, quantization)
             replica = Replica(
                 replica_id=i, model=model, train_dataset=train_datasets[i],
                 tokenizer=tokenizer, args=args,
@@ -169,25 +131,19 @@ def main(args):
         t = threading.Thread(target=_inference_loop, args=(rep,), daemon=True)
         t.start()
 
-    coordinator = None
-    fl_launcher = None
-    if args.baseline == "CLIF":
-        coordinator = Coordinator(
-            min_train_batch=args.min_train_batch, max_train_batch=args.max_train_batch,
-            min_infer_batch=args.min_infer_batch, max_infer_batch=args.max_infer_batch,
-            ddl=ddl_eff, result_dir=output_dir)
-    if args.baseline in FL_BASELINES:
-        fl_launcher = FederatedLearningLauncher(
-            replicas=replicas, request_dispatcher=dispatcher,
-            coordinator=coordinator, state_manager=state_manager,
-            local_steps=args.local_steps, rounds=args.fl_rounds,
-            baseline=args.baseline,
-            swap_strategy=getattr(args, "adapter_swap_strategy", "fixed"),
-            swap_interval=getattr(args, "adapter_swap_interval", 50),
-            swap_loss_delta=getattr(args, "adapter_swap_loss_delta", 0.05),
-            min_participants=getattr(args, "fl_min_participants", 1))
-    else:
-        print(f"[Main] {args.baseline} runs without federated fine-tuning")
+    coordinator = Coordinator(
+        min_train_batch=args.min_train_batch, max_train_batch=args.max_train_batch,
+        min_infer_batch=args.min_infer_batch, max_infer_batch=args.max_infer_batch,
+        ddl=ddl_eff, result_dir=output_dir)
+    fl_launcher = FederatedLearningLauncher(
+        replicas=replicas, request_dispatcher=dispatcher,
+        coordinator=coordinator, state_manager=state_manager,
+        local_steps=args.local_steps, rounds=args.fl_rounds,
+        baseline=args.baseline,
+        swap_strategy=getattr(args, "adapter_swap_strategy", "fixed"),
+        swap_interval=getattr(args, "adapter_swap_interval", 50),
+        swap_loss_delta=getattr(args, "adapter_swap_loss_delta", 0.05),
+        min_participants=getattr(args, "fl_min_participants", 1))
 
     try:
         print(f"[Main] {datetime.now():%Y-%m-%d %H:%M:%S} {args.run_time}s")
@@ -202,11 +158,6 @@ def main(args):
                     for rep in replicas[:n]:
                         rep.set_state(ReplicaState.IDLE)
                     print(f"[Main] fixed_idle marked {n} replicas as IDLE")
-                elif args.baseline == "test":
-                    replicas[0].set_state(ReplicaState.IDLE)
-                elif args.baseline == "DualModel":
-                    for rep in replicas[:min(args.train_replicas_num, len(replicas))]:
-                        rep.set_state(ReplicaState.IDLE)
 
                 print("[Main] Starting federated fine-tuning")
                 fl_launcher.start_fl()
