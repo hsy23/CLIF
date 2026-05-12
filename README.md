@@ -1,8 +1,6 @@
 # CLIF
 
-CLIF is a research artifact for running PEFT fine-tuning alongside online LLM inference. It keeps inference replicas serving requests, detects when there is enough serving slack, and uses that slack to run federated adapter updates.
-
-This repository focuses on the CLIF control path. Experimental baselines, private traces, generated results, and paper-specific assets are intentionally not included.
+CLIF is a system for running PEFT fine-tuning alongside online LLM inference. It keeps inference replicas serving requests, detects when there is enough serving slack, and uses that slack to run federated adapter updates.
 
 ## What CLIF Provides
 
