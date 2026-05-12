@@ -78,7 +78,3 @@ Runs write metrics under `output/`:
 - `fl_round_metrics.xlsx`: federated round summaries.
 - `gpu_monitor.xlsx`: GPU utilization and memory metrics when available.
 - `summary.xlsx`: aggregate run summary.
-
-## Status
-
-This is an anonymized research artifact. The CLIF mechanism code is included, but large traces, checkpoints, raw experiment outputs, and some internal experiment harnesses are not part of this repository. Interfaces may still change as the system is cleaned up further.
