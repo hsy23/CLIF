@@ -1,0 +1,16 @@
+{
+  "base_model_name_or_path": "/home/shaoyuan/.cache/huggingface/hub/models--Qwen--Qwen3-0.6B/snapshots/c1899de289a04d12100db370d81485cdf75e47ca",
+  "bias": "none",
+  "inference_mode": true,
+  "lora_alpha": 8.0,
+  "lora_dropout": 0.0,
+  "peft_type": "LORA",
+  "r": 4,
+  "target_modules": [
+    "q_proj",
+    "v_proj"
+  ],
+  "task_type": "CAUSAL_LM",
+  "use_dora": false,
+  "use_rslora": false
+}

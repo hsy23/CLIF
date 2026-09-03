@@ -1,0 +1,7 @@
+# Optional runtime for the DeltaServe-style engine backend.  It does not alter
+# CLIF's existing Transformers/PEFT prototype requirements.
+vllm==0.21.0
+nvidia-cuda-nvcc==13.0.88
+nvidia-cuda-crt==13.0.88
+nvidia-nvvm==13.0.88
+nvidia-cuda-cccl==13.0.85

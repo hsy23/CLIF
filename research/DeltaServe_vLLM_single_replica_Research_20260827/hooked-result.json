@@ -1,0 +1,37 @@
+{
+  "success": true,
+  "environment": {
+    "torch": "2.11.0+cu130",
+    "cuda": "13.0",
+    "gpu": "NVIDIA GeForce RTX 5070 Ti Laptop GPU",
+    "model": "/home/shaoyuan/.cache/huggingface/hub/models--Qwen--Qwen3-0.6B/snapshots/c1899de289a04d12100db370d81485cdf75e47ca"
+  },
+  "invariants": {
+    "shared_base_allocation": true,
+    "synthetic_ft_and_inference_prefill_in_same_forward": true,
+    "forward_hook_captured_training_row": true,
+    "backward_ran_in_separate_gpu_process": true,
+    "lora_parameters_updated": true,
+    "adapter_published_to_live_vllm": true
+  },
+  "runtime_pid": 423,
+  "backward_pid": 557,
+  "base_allocation_id": "ca93eada-aedc-482a-907e-86849cf67e79",
+  "forward_loss": 6.731245517730713,
+  "backward_loss": 6.731245517730713,
+  "parameter_delta_l1": 15712.62109375,
+  "merged_request_ids": [
+    "deltaserve-ft-0-9fa2fa63",
+    "inference-prefill-0-a5f5b1ea"
+  ],
+  "training_flat_slice": [
+    0,
+    37
+  ],
+  "merged_outputs": [
+    "deltaserve-ft-0",
+    "inference-prefill-0"
+  ],
+  "post_output": " LoRA 是一种用于微调大型",
+  "trace": "/home/shaoyuan/vllm-clif/research/DeltaServe_vLLM_single_replica_Research_20260827/hooked-trace.jsonl"
+}

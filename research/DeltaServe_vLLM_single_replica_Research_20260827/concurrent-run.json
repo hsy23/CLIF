@@ -1,0 +1,231 @@
+{
+  "success": true,
+  "environment": {
+    "torch": "2.11.0+cu130",
+    "cuda_runtime": "13.0",
+    "gpu": "NVIDIA GeForce RTX 5070 Ti Laptop GPU",
+    "model": "/home/shaoyuan/.cache/huggingface/hub/models--Qwen--Qwen3-0.6B/snapshots/c1899de289a04d12100db370d81485cdf75e47ca",
+    "vllm_gpu_memory_utilization": 0.35,
+    "vllm_max_lora_rank": 8
+  },
+  "worker_ready": {
+    "phase": "ready",
+    "pid": 575,
+    "injected_modules": 56,
+    "trainable_parameters": 573440,
+    "cuda_allocated_mib": 1139.08
+  },
+  "inference": {
+    "baseline_requests": 4,
+    "concurrent_requests": 6,
+    "baseline_median_latency_s": 0.6893129348754883,
+    "baseline_p95_latency_s": 0.7410399913787842,
+    "concurrent_median_latency_s": 0.5943012237548828,
+    "concurrent_p95_latency_s": 0.6988489627838135,
+    "concurrent_to_baseline_median_ratio": 0.8621646188348873,
+    "requests": [
+      {
+        "phase": "baseline",
+        "index": 0,
+        "started_wall_s": 1787838861.4164019,
+        "finished_wall_s": 1787838862.1057148,
+        "latency_s": 0.6893129348754883,
+        "output_tokens": 24,
+        "text": "Request 1: 用一句话解释连续批处理和分布式推理的优势。 \nRequest 2: 用"
+      },
+      {
+        "phase": "baseline",
+        "index": 1,
+        "started_wall_s": 1787838862.1057248,
+        "finished_wall_s": 1787838862.8467648,
+        "latency_s": 0.7410399913787842,
+        "output_tokens": 24,
+        "text": "Request 2: 用一句话解释连续批处理和分布式训练的区别。 \nRequest 3: 用"
+      },
+      {
+        "phase": "baseline",
+        "index": 2,
+        "started_wall_s": 1787838862.8467722,
+        "finished_wall_s": 1787838863.514849,
+        "latency_s": 0.668076753616333,
+        "output_tokens": 24,
+        "text": "为什么连续批处理能提高大模型推理吞吐？\n\nAnswer: 连续批处理通过将数据"
+      },
+      {
+        "phase": "baseline",
+        "index": 3,
+        "started_wall_s": 1787838863.5148585,
+        "finished_wall_s": 1787838864.1653328,
+        "latency_s": 0.6504743099212646,
+        "output_tokens": 24,
+        "text": "用中文解释，一句话，不超过100字。  例如：连续批处理可以提高大"
+      },
+      {
+        "phase": "concurrent",
+        "index": 0,
+        "started_wall_s": 1787838870.4214067,
+        "finished_wall_s": 1787838871.1202557,
+        "latency_s": 0.6988489627838135,
+        "output_tokens": 24,
+        "text": "Request 1: 用一句话解释连续批处理和分布式推理的优势。 \nRequest 2: 用"
+      },
+      {
+        "phase": "concurrent",
+        "index": 1,
+        "started_wall_s": 1787838871.1202786,
+        "finished_wall_s": 1787838871.6987603,
+        "latency_s": 0.5784816741943359,
+        "output_tokens": 24,
+        "text": "Request 2: 用一句话解释连续批处理和分布式训练的区别。 \nRequest 3: 用"
+      },
+      {
+        "phase": "concurrent",
+        "index": 2,
+        "started_wall_s": 1787838871.6987798,
+        "finished_wall_s": 1787838872.293081,
+        "latency_s": 0.5943012237548828,
+        "output_tokens": 24,
+        "text": "用中文解释，不要用英文单词，不要用标点符号，不要用数字，不要用句"
+      },
+      {
+        "phase": "concurrent",
+        "index": 3,
+        "started_wall_s": 1787838872.2930973,
+        "finished_wall_s": 1787838872.885687,
+        "latency_s": 0.5925898551940918,
+        "output_tokens": 24,
+        "text": "用中文解释，不要用英文单词，不要用标点符号，不要用数字，不要用句"
+      },
+      {
+        "phase": "concurrent",
+        "index": 4,
+        "started_wall_s": 1787838872.8857045,
+        "finished_wall_s": 1787838873.5796773,
+        "latency_s": 0.6939728260040283,
+        "output_tokens": 24,
+        "text": "用中文解释，不要用英文单词，不要用标点符号，不要用数字，不要用句"
+      },
+      {
+        "phase": "concurrent",
+        "index": 5,
+        "started_wall_s": 1787838873.5796983,
+        "finished_wall_s": 1787838874.2374346,
+        "latency_s": 0.6577363014221191,
+        "output_tokens": 24,
+        "text": "用中文解释，不要用英文单词，不要用标点符号，不要用数字，不要用句"
+      }
+    ]
+  },
+  "training": {
+    "phase": "finished",
+    "pid": 575,
+    "injected_modules": 56,
+    "trainable_parameters": 573440,
+    "cuda_allocated_mib": 1139.08,
+    "training_started_wall_s": 1787838870.4261801,
+    "training_finished_wall_s": 1787838872.7343445,
+    "training_elapsed_s": 2.308164358139038,
+    "parameter_delta_l1": 4702.797113418579,
+    "initial_loss": 1.507567286491394,
+    "final_loss": 0.4235977530479431,
+    "steps": [
+      {
+        "step": 0,
+        "started_wall_s": 1787838870.4306726,
+        "finished_wall_s": 1787838871.8692284,
+        "elapsed_s": 1.4385557174682617,
+        "loss": 1.507567286491394,
+        "grad_norm": 1.1574496030807495
+      },
+      {
+        "step": 1,
+        "started_wall_s": 1787838871.8708968,
+        "finished_wall_s": 1787838871.9854758,
+        "elapsed_s": 0.1145789623260498,
+        "loss": 1.4790380001068115,
+        "grad_norm": 1.134588599205017
+      },
+      {
+        "step": 2,
+        "started_wall_s": 1787838871.9877195,
+        "finished_wall_s": 1787838872.109748,
+        "elapsed_s": 0.12202835083007812,
+        "loss": 1.3333158493041992,
+        "grad_norm": 1.0911027193069458
+      },
+      {
+        "step": 3,
+        "started_wall_s": 1787838872.1111677,
+        "finished_wall_s": 1787838872.2411003,
+        "elapsed_s": 0.12993264198303223,
+        "loss": 0.8014015555381775,
+        "grad_norm": 1.279892086982727
+      },
+      {
+        "step": 4,
+        "started_wall_s": 1787838872.2423043,
+        "finished_wall_s": 1787838872.3797815,
+        "elapsed_s": 0.13747715950012207,
+        "loss": 0.8323290348052979,
+        "grad_norm": 1.5836231708526611
+      },
+      {
+        "step": 5,
+        "started_wall_s": 1787838872.3812032,
+        "finished_wall_s": 1787838872.4990022,
+        "elapsed_s": 0.11779904365539551,
+        "loss": 0.869988203048706,
+        "grad_norm": 1.5300991535186768
+      },
+      {
+        "step": 6,
+        "started_wall_s": 1787838872.5012891,
+        "finished_wall_s": 1787838872.6179736,
+        "elapsed_s": 0.1166844367980957,
+        "loss": 0.3698846101760864,
+        "grad_norm": 1.4384000301361084
+      },
+      {
+        "step": 7,
+        "started_wall_s": 1787838872.6196492,
+        "finished_wall_s": 1787838872.7339823,
+        "elapsed_s": 0.1143331527709961,
+        "loss": 0.4235977530479431,
+        "grad_norm": 1.6579246520996094
+      }
+    ],
+    "adapter": {
+      "path": "research/DeltaServe_vLLM_single_replica_Research_20260827/concurrent-run-adapter",
+      "modules": 56,
+      "tensors": 112,
+      "bytes": 2308400
+    },
+    "peak_cuda_allocated_mib": 1531.23
+  },
+  "trained_adapter_validation": {
+    "first_request_includes_load_and_jit": {
+      "phase": "trained_adapter_load",
+      "index": 0,
+      "started_wall_s": 1787838874.2377849,
+      "finished_wall_s": 1787838875.7066572,
+      "latency_s": 1.468872308731079,
+      "output_tokens": 24,
+      "text": "高吞吐需要连续批处理。 高吞吐需要连续批处理。 高吞吐需要连续"
+    },
+    "warm_request": {
+      "phase": "trained_adapter_warm",
+      "index": 1,
+      "started_wall_s": 1787838875.7066672,
+      "finished_wall_s": 1787838876.8676171,
+      "latency_s": 1.160949945449829,
+      "output_tokens": 24,
+      "text": "高吞吐需要连续批处理。 高吞吐需要连续批处理。 高吞吐需要连续"
+    }
+  },
+  "overlap": {
+    "requests_overlapping_training_steps": 4,
+    "training_steps_overlapping_inference": 8
+  },
+  "worker_stdout": "\nLoading weights:   0%|          | 0/311 [00:00<?, ?it/s]\nLoading weights: 100%|██████████| 311/311 [00:00<00:00, 4101.85it/s]\n",
+  "temporary_run_dir": "/tmp/vllm-lora-concurrent-thq3vjox"
+}

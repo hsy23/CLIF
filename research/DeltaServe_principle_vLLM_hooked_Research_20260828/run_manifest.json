@@ -1,0 +1,20 @@
+{
+  "version": "3.0.0",
+  "query": "评估当前 vLLM 单副本原型与 DeltaServe 原理的一致性，以及能否实现训推无干扰高效并发",
+  "mode": "standard",
+  "started_at": "2026-08-28T01:28:46.846965+00:00",
+  "finished_at": null,
+  "assumptions": [],
+  "provider_config": {
+    "primary": "search-cli",
+    "scholarly": null
+  },
+  "report_dir": "C:\\Users\\84553\\Desktop\\CLIF2027\\CLIF-Co-Orchestrating-LLM-Inference-Serving-and-Fine-tuning\\research\\DeltaServe_principle_vLLM_hooked_Research_20260828",
+  "artifact_paths": {
+    "sources": "sources.jsonl",
+    "evidence": "evidence.jsonl",
+    "claims": "claims.jsonl",
+    "report": "report.md"
+  },
+  "continuation": null
+}

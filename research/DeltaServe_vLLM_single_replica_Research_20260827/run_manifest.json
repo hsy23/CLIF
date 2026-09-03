@@ -1,0 +1,24 @@
+{
+  "version": "3.0.0",
+  "query": "Assess the current CLIF DeltaServe-style vLLM single-replica prototype in WSL and determine the gap to efficient low-interference concurrent inference and LoRA fine-tuning",
+  "mode": "deep",
+  "started_at": "2026-08-27T10:46:43.135929+00:00",
+  "finished_at": "2026-08-27T11:13:42.2762165Z",
+  "assumptions": [
+    "Engineering readiness percentages are heuristic subsystem estimates, not paper metrics.",
+    "Zero interference is interpreted as bounded interference under explicit TTFT and TPOT SLOs.",
+    "A public DeltaServe repository was not found during this run; this is not proof that none exists."
+  ],
+  "provider_config": {
+    "primary": "search-cli",
+    "scholarly": null
+  },
+  "report_dir": "C:\\Users\\84553\\Desktop\\CLIF2027\\CLIF-Co-Orchestrating-LLM-Inference-Serving-and-Fine-tuning\\research\\DeltaServe_vLLM_single_replica_Research_20260827",
+  "artifact_paths": {
+    "sources": "sources.jsonl",
+    "evidence": "evidence.jsonl",
+    "claims": "claims.jsonl",
+    "report": "report.md"
+  },
+  "continuation": null
+}
